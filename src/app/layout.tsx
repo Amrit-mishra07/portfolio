@@ -14,7 +14,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Amritanshu Mishra - Portfolio",
-  description: "Building systems that scale. Writing code that lasts.",
+  description: "Building systems that scale. Writing code that lasts. Open to SWE internships and placements. Contact me at amritanshu8415@gmail.com",
 };
 
 export default function RootLayout({

@@ -25,10 +25,10 @@ export default function Hero() {
   useEffect(() => {
     let timeoutIds: NodeJS.Timeout[] = [];
     
-    // Quick and simple sequencer for terminal lines
     let currentDelay = 0;
     terminalLines.forEach((line, index) => {
-      currentDelay = line.delay ? line.delay : currentDelay + (line.type === 'command' ? 500 : 100);
+      // Slightly increased delays for more choreographed feel
+      currentDelay = line.delay ? line.delay + 300 : currentDelay + (line.type === 'command' ? 600 : 200);
       const id = setTimeout(() => {
         setVisibleLines(index + 1);
       }, currentDelay);
@@ -41,39 +41,60 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="container mx-auto px-6 py-24 min-h-[calc(100vh-4rem)] flex flex-col justify-center">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <section className="relative container mx-auto px-6 py-24 min-h-[calc(100vh-4rem)] flex flex-col justify-center overflow-hidden">
+      {/* Animated Dot Grid Background */}
+      <div 
+        className="absolute inset-0 pointer-events-none -z-10"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+          maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 70%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 70%)',
+        }}
+      />
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative">
         {/* Left: Text */}
         <div className="lg:col-span-7 flex flex-col items-start gap-6">
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="font-mono text-[var(--color-text-muted)] text-sm"
           >
             // cs student · swe · iiit pune
           </motion.p>
           
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight text-[var(--color-text-primary)]"
-          >
-            Amritanshu <br className="hidden md:block" />
-            Mishra
-            <motion.span
-              animate={{ opacity: [1, 0] }}
-              transition={{ repeat: Infinity, duration: 0.8 }}
-              className="text-[var(--color-accent)] inline-block w-[0.5em] h-[1em] translate-y-2 bg-[var(--color-accent)] ml-1"
+          <div className="relative">
+            {/* Subtle glow behind name */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="absolute -inset-4 bg-[var(--color-accent)]/5 blur-2xl rounded-full -z-10"
+            />
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="text-5xl md:text-7xl font-bold tracking-tight text-[var(--color-text-primary)] relative"
             >
-              _
-            </motion.span>
-          </motion.h1>
+              Amritanshu <br className="hidden md:block" />
+              Mishra
+              <motion.span
+                animate={{ opacity: [1, 0] }}
+                transition={{ repeat: Infinity, duration: 0.8 }}
+                className="text-[var(--color-accent)] inline-block w-[0.5em] h-[1em] translate-y-2 bg-[var(--color-accent)] ml-1"
+              >
+                _
+              </motion.span>
+            </motion.h1>
+          </div>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
             className="text-[var(--color-text-muted)] text-lg md:text-xl max-w-2xl leading-relaxed mt-2"
           >
             I build systems that scale and code that lasts. Focused on cloud infrastructure, distributed systems, and backend engineering.
@@ -82,27 +103,27 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
             className="flex flex-wrap gap-4 mt-4"
           >
             <Link
               href="#work"
-              className="px-6 py-3 border border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all font-mono text-sm flex items-center gap-2"
+              className="px-6 py-3 border border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all font-mono text-sm flex items-center gap-2 group"
             >
-              View Work <ArrowRight className="w-4 h-4" />
+              View Work <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a
               href="#"
-              className="px-6 py-3 border border-[var(--color-border)] hover:border-[var(--color-text-primary)] transition-all font-mono text-sm flex items-center gap-2"
+              className="px-6 py-3 border border-[var(--color-border)] hover:border-[var(--color-text-primary)] transition-all font-mono text-sm flex items-center gap-2 group"
             >
-              Resume <ArrowDown className="w-4 h-4" />
+              Resume <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
             </a>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 1 }}
             className="flex items-center gap-2 mt-4 text-sm text-[var(--color-text-muted)] font-mono"
           >
             <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse" />
@@ -112,9 +133,9 @@ export default function Hero() {
 
         {/* Right: Terminal */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ type: "spring", damping: 20, stiffness: 100, delay: 1.2 }}
           className="lg:col-span-5 w-full"
         >
           <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden shadow-2xl">
@@ -146,13 +167,18 @@ export default function Hero() {
                 </div>
               ))}
               {visibleLines >= terminalLines.length && (
-                <div className="flex gap-4 mt-2 text-[var(--color-text-muted)]">
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex gap-4 mt-2 text-[var(--color-text-muted)]"
+                >
                   <a href="https://github.com/Amrit-mishra07" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-accent)] transition-colors">github</a>
                   <a href="https://www.linkedin.com/in/amritanshu-mishra-a4442b25b/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-accent)] transition-colors">linkedin</a>
                   <a href="https://leetcode.com/u/TheBeast_07/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-accent)] transition-colors">leetcode</a>
                   <a href="https://www.codechef.com/users/thebeast_07" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-accent)] transition-colors">codechef</a>
                   <a href="https://codeforces.com/profile/TheBeast_07" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-accent)] transition-colors">codeforces</a>
-                </div>
+                </motion.div>
               )}
             </div>
           </div>

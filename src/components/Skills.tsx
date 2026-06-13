@@ -1,3 +1,7 @@
+"use client";
+
+import ScrollReveal from "./ScrollReveal";
+
 const skills = [
   {
     category: "$ languages",
@@ -20,34 +24,46 @@ const skills = [
 export default function Skills() {
   return (
     <section id="skills" className="container mx-auto px-6 py-24 border-t border-[var(--color-border)]">
-      <div className="mb-12">
-        <h2 className="font-mono text-xl text-[var(--color-text-primary)]">
-          // tech-stack
-        </h2>
-      </div>
+      <ScrollReveal>
+        <div className="mb-12">
+          <h2 className="font-mono text-xl text-[var(--color-text-primary)]">
+            // tech-stack
+          </h2>
+        </div>
+      </ScrollReveal>
 
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {skills.map((skillGroup, idx) => (
-            <div key={idx} className="flex flex-col gap-4">
-              <h3 className="font-mono text-[var(--color-accent)]">{skillGroup.category}</h3>
-              <ul className="flex flex-col gap-2">
-                {skillGroup.items.map((item, i) => (
-                  <li key={i} className="font-mono text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors cursor-default">
-                    <span className="text-[var(--color-border)] mr-2">&gt;</span>{item}
-                  </li>
-                ))}
-              </ul>
+      <ScrollReveal>
+        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {skills.map((skillGroup, idx) => (
+              <ScrollReveal key={idx} delay={idx * 0.1}>
+                <div className="flex flex-col gap-4 h-full">
+                  <h3 className="font-mono text-[var(--color-accent)]">{skillGroup.category}</h3>
+                  <ul className="flex flex-col gap-2">
+                    {skillGroup.items.map((item, i) => (
+                      <li 
+                        key={i} 
+                        className="font-mono text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-all duration-300 cursor-default group flex items-center p-1 -ml-1 rounded hover:bg-[var(--color-surface-hover)] border-l-2 border-transparent hover:border-[var(--color-accent)]"
+                      >
+                        <span className="text-[var(--color-border)] group-hover:text-[var(--color-accent)] transition-colors mr-2">&gt;</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+          
+          <ScrollReveal delay={0.4}>
+            <div className="mt-12 pt-6 border-t border-[var(--color-border)]">
+              <p className="font-mono text-sm text-[var(--color-text-muted)] italic">
+                // actively deepening cloud & systems knowledge
+              </p>
             </div>
-          ))}
+          </ScrollReveal>
         </div>
-        
-        <div className="mt-12 pt-6 border-t border-[var(--color-border)]">
-          <p className="font-mono text-sm text-[var(--color-text-muted)] italic">
-            // actively deepening cloud & systems knowledge
-          </p>
-        </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
