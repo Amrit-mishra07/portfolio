@@ -12,12 +12,31 @@ async function getGithubProjects() {
       
       if (res.ok) {
         const repo = await res.json();
+        
+        let techStack = repo.language ? [repo.language] : [];
+        try {
+          if (repo.languages_url) {
+            const langRes = await fetch(repo.languages_url, { 
+              next: { revalidate: 3600 } 
+            });
+            if (langRes.ok) {
+              const langData = await langRes.json();
+              const fetchedLanguages = Object.keys(langData);
+              if (fetchedLanguages.length > 0) {
+                techStack = fetchedLanguages;
+              }
+            }
+          }
+        } catch (langError) {
+          console.error(`Failed to fetch languages for ${repoFullName}`, langError);
+        }
+
         projectsData.push({
           num: `[0${projectsData.length + 1}]`,
           tag: repo.language ? `$ ${repo.language.toLowerCase()} · open-source` : "$ open-source",
           name: repo.name,
           desc: repo.description || "No description provided.",
-          tech: repo.language ? [repo.language] : [],
+          tech: techStack,
           github: repo.html_url,
           live: repo.homepage || null,
           isComingSoon: false

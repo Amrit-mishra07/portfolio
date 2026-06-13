@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Amrit Mishra | Developer Portfolio
 
-## Getting Started
+Welcome to the source code for my personal developer portfolio! This is a modern, highly-responsive web application designed to showcase my projects, competitive programming statistics, and technical skills. 
 
-First, run the development server:
+## ✨ Features
+
+- **Modern UI/UX**: Designed with a sleek, developer-focused terminal aesthetic.
+- **Dynamic Projects**: Real-time project syncing with GitHub, displaying up-to-date technologies and descriptions.
+- **Smooth Animations**: Uses Framer Motion for scroll reveals, hover states, and dynamic elements.
+- **Responsive Design**: Fully optimized for mobile, tablet, and desktop viewing.
+
+## 🛠️ Tech Stack
+
+This project is built with the following technologies:
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Library**: [React 19](https://react.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/) & [Tabler Icons](https://tabler.io/icons)
+
+## 🚦 Getting Started
+
+To run this project locally on your machine, follow these steps:
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Amrit-mishra07/portfolio.git
+cd portfolio
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/`: Core Next.js routing, layouts, and global styles.
+- `src/components/`: Reusable React components (Navbar, Hero, Projects, etc.).
+- `src/data/`: Static data sources (e.g., list of repositories).
+- `public/`: Static assets such as fonts and images.
 
-## Learn More
+## 🤝 Contributing
 
-To learn more about Next.js, take a look at the following resources:
+This is a personal portfolio, but feedback, suggestions, and pull requests to improve the code quality are always welcome!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📬 Contact
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **GitHub**: [@Amrit-mishra07](https://github.com/Amrit-mishra07)
