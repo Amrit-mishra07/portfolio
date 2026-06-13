@@ -1,128 +1,51 @@
-"use client";
+import ProjectsClient from "./ProjectsClient";
+import projectRepos from "../data/projects.json";
 
-import { ExternalLink } from "lucide-react";
-import { IconBrandGithub } from "@tabler/icons-react";
-import ScrollReveal from "./ScrollReveal";
+async function getGithubProjects() {
+  const projectsData = [];
 
-const projects = [
-  {
-    num: "[01]",
-    tag: "$ full-stack · web-app",
-    name: "Student Project Management System",
-    desc: "Full-stack web application that automates project management workflows at IIIT Pune — handles submissions, reviews, and faculty coordination end-to-end.",
-    tech: ["JavaScript", "Node.js", "Express", "MongoDB"],
-    github: "https://github.com/Amrit-mishra07/Student-Project-Management-System-IIITP",
-    live: null,
-  },
-  {
-    num: "[02]",
-    tag: "$ system-design · typescript",
-    name: "Resource Management System",
-    desc: "Institute-level platform for tracking, assigning, and monitoring resources across departments — built for scale.",
-    tech: ["TypeScript", "React", "Node.js"],
-    github: "https://github.com/Amrit-mishra07/Resource-Management-Project",
-    live: null,
-  },
-  {
-    num: "[03]",
-    tag: "$ in-progress",
-    name: "// coming soon",
-    desc: "Currently building — drop by GitHub to see what's cooking.",
-    tech: [],
-    github: "https://github.com/Amrit-mishra07",
-    live: null,
-    isComingSoon: true,
-  },
-  {
-    num: "[04]",
-    tag: "$ in-progress",
-    name: "// coming soon",
-    desc: "Currently building — drop by GitHub to see what's cooking.",
-    tech: [],
-    github: "https://github.com/Amrit-mishra07",
-    live: null,
-    isComingSoon: true,
+  for (const repoFullName of projectRepos) {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${repoFullName}`, { 
+        next: { revalidate: 3600 } 
+      });
+      
+      if (res.ok) {
+        const repo = await res.json();
+        projectsData.push({
+          num: `[0${projectsData.length + 1}]`,
+          tag: repo.language ? `$ ${repo.language.toLowerCase()} · open-source` : "$ open-source",
+          name: repo.name,
+          desc: repo.description || "No description provided.",
+          tech: repo.language ? [repo.language] : [],
+          github: repo.html_url,
+          live: repo.homepage || null,
+          isComingSoon: false
+        });
+      }
+    } catch (error) {
+      console.error(`Failed to fetch github repo ${repoFullName}`, error);
+    }
   }
-];
 
-export default function Projects() {
-  return (
-    <section id="work" className="container mx-auto px-6 py-24 border-t border-[var(--color-border)]">
-      <ScrollReveal>
-        <div className="mb-12">
-          <h2 className="font-mono text-xl text-[var(--color-text-primary)]">
-            // selected-work
-          </h2>
-        </div>
-      </ScrollReveal>
+  // Fill with coming soon if we couldn't fetch enough projects or if list is short
+  while (projectsData.length < 4) {
+    projectsData.push({
+      num: `[0${projectsData.length + 1}]`,
+      tag: "$ in-progress",
+      name: "// coming soon",
+      desc: "Currently building — drop by GitHub to see what's cooking.",
+      tech: [],
+      github: "https://github.com/Amrit-mishra07",
+      live: null,
+      isComingSoon: true,
+    });
+  }
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {projects.map((project, idx) => (
-          <ScrollReveal key={idx} delay={idx * 0.1}>
-            <div
-              className="group bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-accent)] hover:bg-[var(--color-surface-hover)] transition-all duration-300 p-8 rounded-lg flex flex-col h-full hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(0,229,160,0.05)] cursor-default"
-            >
-              <div className="flex justify-between items-start mb-6">
-                <span className="font-mono text-sm text-[var(--color-accent)]">{project.tag}</span>
-                <span className="font-mono text-[var(--color-text-muted)] group-hover:text-[var(--color-text-primary)] transition-colors">{project.num}</span>
-              </div>
-              
-              <h3 className="text-2xl font-bold text-[var(--color-text-primary)] mb-3 flex items-center gap-2 group-hover:text-[var(--color-accent)] transition-colors">
-                {project.name}
-                {project.isComingSoon && (
-                  <span className="inline-flex space-x-1 animate-pulse">
-                    <span className="w-1.5 h-1.5 bg-[var(--color-text-primary)] rounded-full group-hover:bg-[var(--color-accent)] transition-colors"></span>
-                    <span className="w-1.5 h-1.5 bg-[var(--color-text-primary)] rounded-full group-hover:bg-[var(--color-accent)] transition-colors"></span>
-                    <span className="w-1.5 h-1.5 bg-[var(--color-text-primary)] rounded-full group-hover:bg-[var(--color-accent)] transition-colors"></span>
-                  </span>
-                )}
-              </h3>
-              
-              <p className="text-[var(--color-text-muted)] mb-8 flex-grow leading-relaxed group-hover:text-[var(--color-text-primary)] transition-colors">
-                {project.desc}
-              </p>
-              
-              <div className="mt-auto flex flex-col gap-6">
-                {project.tech.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 border border-[var(--color-border)] rounded-full text-xs font-mono text-[var(--color-text-muted)] group-hover:border-[var(--color-accent)] group-hover:text-[var(--color-text-primary)] transition-colors"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                
-                <div className="flex gap-4 border-t border-[var(--color-border)] pt-4 mt-2 group-hover:border-[var(--color-accent)]/30 transition-colors">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm font-mono text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
-                    >
-                      <IconBrandGithub className="w-4 h-4" /> GitHub ↗
-                    </a>
-                  )}
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm font-mono text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" /> Live ↗
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
-        ))}
-      </div>
-    </section>
-  );
+  return projectsData;
+}
+
+export default async function Projects() {
+  const allProjects = await getGithubProjects();
+  return <ProjectsClient projects={allProjects} />;
 }
